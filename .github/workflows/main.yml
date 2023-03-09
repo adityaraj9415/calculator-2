@@ -9,7 +9,7 @@ jobs:
      - name: Checkout Code into Repo
        uses: actions/checkout@v2
      - name: Calculating using Custom Action
-       uses: adityaraj9415/calc-custom-actions/.github/actions/calculator-action@main
+       uses: adityaraj9415/custom-workflow@main
        id: poop
        with: 
          number1: 10
