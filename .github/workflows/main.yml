@@ -1,21 +1,37 @@
-name: Calculator using Custom Workflow
-on: 
-  push:
-    branches: [ main ]
+name: 'Calculator Workflow'
+
+on:
+  workflow_dispatch:
+    inputs:
+      number1:
+        description: 'The first number'
+        required: true
+        default: 0
+      number2:
+        description: 'The second number'
+        required: true
+        default: 0
+      operation:
+        description: 'The operation to perform (addition, subtraction, multiplication, division)'
+        required: true
+        default: 'addition'
 
 jobs:
-  run_calculator:
-   runs-on: ubuntu-latest
-   steps:
-     - name: Checkout Code into Repo
-       uses: actions/checkout@v2
-     - name: Calculating using Custom Action
-       uses: adityaraj9415/custom-workflow@main
-       id: poop
-       with: 
-         number1: 18
-         number2: 5
-         operation: '+'
-       
-     - name: Display Result
-       run: "The Result is: $result"
+  calculate:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.calculate.outputs.result }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Perform calculation
+        uses: adityaraj9415/custom-workflow@main
+        id: calculate
+        with:
+          number1: ${{ github.event.inputs.number1 }}
+          number2: ${{ github.event.inputs.number2 }}
+          operation: ${{ github.event.inputs.operation }}
+      - name: Echo result
+        run: |
+          echo "Result: ${{ steps.calculate.outputs.result }}"
+
