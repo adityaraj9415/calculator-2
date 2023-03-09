@@ -1,0 +1,20 @@
+on: 
+  push:
+    branches: [ main ]
+
+jobs:
+  run_calculator:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Checkout Code into Repo
+       uses: actions/checkout@v2
+     - name: Calculating using Custom Action
+       uses: adityaraj9415/calc-custom-actions/.github/actions/calculator-action@main
+       id: poop
+       with: 
+         number1: 10
+         number2: 5
+         operation: '+'
+       
+     - name: Display Result
+       run: "The Result is: $result"
